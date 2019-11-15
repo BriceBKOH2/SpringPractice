@@ -1,4 +1,4 @@
-package briceb.spring_jdbc.database;
+package briceb.spring_jdbc.dao;
 
 import javax.sql.DataSource;
 

@@ -1,15 +1,16 @@
-package briceb.spring_jdbc.database;
+package briceb.spring_jdbc.dao;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.*;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 public class JbdcConfiguration {
 	
@@ -24,5 +25,10 @@ public class JbdcConfiguration {
 		dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
 		dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
 		return dataSource;
+	}
+	
+	@Bean
+	public PlatformTransactionManager txManager() {
+	return new DataSourceTransactionManager(dataSource());
 	}
 }
